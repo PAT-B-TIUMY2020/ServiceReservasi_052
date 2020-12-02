@@ -17,7 +17,22 @@ namespace ServiceReservasi
 
         public string deletePemesanan(string IDPemesanan)
         {
-            throw new NotImplementedException();
+            string a = "gagal";
+            try
+            {
+                string sql = "delete from dbo.Pemesanan where ID_reservasi = '" + IDPemesanan + "'";
+                connection = new SqlConnection(constring); //fungsi konek ke database
+                com = new SqlCommand(sql, connection);
+                connection.Open();
+                com.ExecuteNonQuery();
+                connection.Close();
+                a = "sukses";
+            }
+            catch (Exception es)
+            {
+                Console.WriteLine(es);
+            }
+            return a;
         }
 
         public List<DetailLokasi> DetailLokasi()
@@ -55,7 +70,7 @@ namespace ServiceReservasi
             string a = "gagal";
             try
             {
-                string sql = "update dbo.Pemesanan set Nama_customer = '" + NamaCustomer + "', NoTelpon = '" + NoTelpon + "'" + " where ID_reservasi = '" + IDPemesanan + "' ";
+                string sql = "update dbo.Pemesanan set Nama_customer = '" + NamaCustomer + "', No_telpon = '" + NoTelpon + "'" + " where ID_reservasi = '" + IDPemesanan + "' ";
                 connection = new SqlConnection(constring); //fungsi konek ke database
                 com = new SqlCommand(sql, connection);
                 connection.Open();
@@ -119,7 +134,7 @@ namespace ServiceReservasi
                     data.NoTelpon = reader.GetString(2);
                     data.JumlahPemesanan = reader.GetInt32(3);
                     data.Lokasi = reader.GetString(4);
-                    pemesanan.Add(data); //mengumpulkan data yang awalnya dari array
+                    pemesanans.Add(data); //mengumpulkan data yang awalnya dari array
                 }
                 connection.Close(); //untuk menutup akses ke database
             }
@@ -133,26 +148,6 @@ namespace ServiceReservasi
         public List<CekLokasi> ReviewLokasi()
         {
             throw new NotImplementedException();
-        }
-
-        public string deletePemesanan(string IDPemesanan)
-        {
-            string a = "gagal";
-            try
-            {
-                string sql = "delete from dbo.Pemesanan where ID_reservasi = '" + IDPemesanan + "'";
-                connection = new SqlConnection(constring); //fungsi konek ke database
-                com = new SqlCommand(sql, connection);
-                connection.Open();
-                com.ExecuteNonQuery();
-                connection.Close();
-                a = "sukses";
-            }
-            catch (Exception es)
-            {
-                Console.WriteLine(es);
-            }
-            return a;
         }
     }
 }
